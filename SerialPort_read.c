@@ -74,9 +74,7 @@ void main(void)
 
 	bytes_read = read(fd, &read_buffer, 32); // Read the data 
 		
-	printf("\n Bytes Recus : %d", bytes_read); // Print the number of bytes read
-	printf("\n");
-
+	printf(" Bytes Recus : %d --> ", bytes_read); // Print the number of bytes read
 	for(i=0; i<bytes_read; i++)	 // printing only the received characters
 		printf("%c", read_buffer[i]);
 
