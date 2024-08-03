@@ -54,13 +54,15 @@ void main(void)
 	SerialPortSettings.c_cflag |= CREAD | CLOCAL; // Enable receiver, Ignore Modem Control lines
 	
 	SerialPortSettings.c_iflag &= ~(IXON | IXOFF | IXANY);          // Disable XON/XOFF flow control both i/p and o/p
-	SerialPortSettings.c_iflag &= ~(ICANON | ECHO | ECHOE | ISIG);  // Non Cannonical mode 
+	SerialPortSettings.c_iflag &= ~(ECHO | ECHOE | ISIG);  // Disable echo, Disable signal  
+
+	SerialPortSettings.c_lflag = 0; // Non Cannonical mode
 
 	SerialPortSettings.c_oflag &= ~OPOST;	// No Output Processing
-	
+
 	// Setting Time outs 
-	SerialPortSettings.c_cc[VMIN] = 10; // Read at least 10 characters 
-	SerialPortSettings.c_cc[VTIME] = 0; // Wait 3sec (0 for indefinetly) 
+	SerialPortSettings.c_cc[VMIN] = 0; // Read at least X character(s) 
+	SerialPortSettings.c_cc[VTIME] = 30; // Wait 3sec (0 for indefinetly) 
 
 	if((tcsetattr(fd, TCSANOW, &SerialPortSettings)) != 0) // Set the attributes to the termios structure
 		printf("\n  Erreur! configuration des attributs du port serie");

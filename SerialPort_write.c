@@ -54,8 +54,10 @@ void main(void)
 	SerialPortSettings.c_cflag &= ~CRTSCTS;       // No Hardware flow Control
 	SerialPortSettings.c_cflag |= CREAD | CLOCAL; // Enable receiver, Ignore Modem Control lines 
 
-	SerialPortSettings.c_iflag &= ~(IXON | IXOFF | IXANY);          // Disable XON/XOFF flow control both i/p and o/p
-	SerialPortSettings.c_iflag &= ~(ICANON | ECHO | ECHOE | ISIG);  // Non Cannonical mode 
+	SerialPortSettings.c_iflag &= ~(IXON | IXOFF | IXANY);	// Disable XON/XOFF flow control both i/p and o/p
+	SerialPortSettings.c_iflag &= ~(ECHO | ECHOE | ISIG);	// Disable echo, Disable signal  
+
+	SerialPortSettings.c_lflag = 0;	// Non Cannonical mode
 
 	SerialPortSettings.c_oflag &= ~OPOST;	//No Output Processing
 
@@ -63,7 +65,7 @@ void main(void)
 		printf("\n  Erreur! configuration des attributs du port serie");
 
 	// Write data to serial port 
-	char write_buffer[] = "ABCDE12345\n";	// Buffer containing characters to write into port
+	char write_buffer[] = "ABCDE12345";	// Buffer containing characters to write into port
 	int  bytes_written  = 0;  	// Value for storing the number of bytes written to the port 
 
 	bytes_written = write(fd, write_buffer, sizeof(write_buffer)); // use write() to send data to port 
